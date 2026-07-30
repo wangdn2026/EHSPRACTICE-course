@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>承包商安全管理(二) · 互动练习</title>
+<style>
+:root{--navy:#1e3a5f;--amber:#fbbf24;--bg:#f8fafc;--card:#FFF;--tx:#0f172a;--tx2:#475569;--tx3:#94a3b8;--bd:#e2e8f0;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--r:10px;--r2:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);min-height:100vh;font-family:"Inter","PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.nav-bar{background:#fff;border-bottom:1px solid var(--bd);padding:6px 10px;display:flex;align-items:center;gap:6px}
+.nav-logo{display:flex;align-items:center;gap:5px;font-weight:700;font-size:.82rem}
+.logo-icon{width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#0EC8A9,#01C886);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem;font-weight:800}
+.nav-spacer{flex:1}
+.nav-btn{padding:4px 8px;border-radius:var(--r);border:1px solid var(--bd);background:#fff;font-size:.68rem;cursor:pointer;color:var(--tx2);font-family:inherit;white-space:nowrap}
+.nav-btn-primary{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+.hide-m{display:none}
+.hero{background:linear-gradient(135deg,var(--navy),#2c4a6e);padding:18px 12px 20px;text-align:center;color:#fff;position:relative}
+.hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--amber)}
+.hero h1{font-size:1.2rem;font-weight:700;margin-bottom:3px}
+.hero-sub{font-size:.72rem;color:rgba(255,255,255,.7);margin-bottom:8px}
+.hero-tags{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.hero-tag{padding:2px 8px;background:rgba(255,255,255,.1);border-radius:16px;font-size:.65rem;color:rgba(255,255,255,.85)}
+.level-section{padding:10px 10px 4px}
+.level-grid{display:grid;grid-template-columns:1fr;gap:6px}
+.level-card{background:var(--card);border:2px solid var(--bd);border-radius:var(--r2);padding:10px 12px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.level-card:active{transform:scale(.98)}
+.level-card.sel-b{border-color:var(--green);background:#dcfce7}
+.level-card.sel-i{border-color:var(--yellow);background:#fef3c7}
+.level-card.sel-a{border-color:var(--red);background:#fee2e2}
+.level-dot{width:18px;height:18px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.6rem}
+.ld-b{background:var(--green)}.ld-i{background:var(--yellow)}.ld-a{background:var(--red)}
+.level-title{font-size:.85rem;font-weight:700}.level-desc{font-size:.68rem;color:var(--tx2)}
+.main-grid{padding:0 10px 10px;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--card);border-radius:var(--r2)}
+.card-header{padding:9px 12px 7px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:5px}
+.card-title{font-size:.88rem;font-weight:700}.card-body{padding:10px}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.role-tile{border:2px dashed var(--bd);border-radius:var(--r);padding:12px 8px;text-align:center;cursor:pointer;background:#fff;-webkit-tap-highlight-color:transparent}
+.role-tile:active{transform:scale(.97)}
+.role-avatar-circle{width:44px;height:44px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;color:var(--tx2);background:#f1f5f9}
+.role-tile-A .role-avatar-circle{background:#dbeafe;color:#1e40af}
+.role-tile-B .role-avatar-circle{background:#d1fae5;color:#065f46}
+.role-tile-C .role-avatar-circle{background:#fef3c7;color:#92400e}
+.role-tile-D .role-avatar-circle{background:#ede9fe;color:#5b21b6}
+.role-name{font-size:.82rem;font-weight:700}.role-desc{font-size:.7rem;color:var(--tx2)}
+.role-student{font-size:.72rem;color:#f97316;font-weight:600;margin-top:2px}
+.role-empty{font-size:.65rem;color:var(--tx3);margin-top:2px}
+.role-tile.claimed .role-empty{display:none}
+.step-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:8px;background:#fff;padding:3px;border-radius:var(--r);border:1px solid var(--bd)}
+.step-tab{padding:10px 2px;border-radius:var(--r);border:none;background:transparent;font-size:.72rem;font-family:inherit;cursor:pointer;color:var(--tx2);font-weight:500;text-align:center;-webkit-tap-highlight-color:transparent}
+.step-tab.active{background:var(--navy);color:#fff;font-weight:600}
+.desc-title{font-size:.92rem;font-weight:700;margin-bottom:5px}
+.desc-text{font-size:.84rem;line-height:1.7;color:var(--tx2);padding-left:10px;border-left:3px solid var(--amber)}
+.tip-box{padding:8px 10px;background:#fef3c7;border-left:3px solid var(--amber);border-radius:var(--r);font-size:.75rem;color:#92400e;margin-top:8px}
+.colloc-list{display:flex;flex-direction:column;gap:6px}
+.colloc-item{display:flex;align-items:center;gap:10px;padding:12px;background:#f8fafc;border-radius:var(--r);border:1px solid var(--bd);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.colloc-item:active{background:#dcfce7}
+.colloc-play{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0}
+.colloc-en{font-size:.92rem;font-weight:700;color:var(--navy)}.colloc-zh{font-size:.75rem;color:var(--tx2)}
+.dl-turn{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:var(--r);margin-bottom:6px;border-left:3px solid var(--bd)}
+.dl-turn.sA{background:#eff6ff;border-left-color:#3b82f6}
+.dl-turn.sB{background:#ecfdf5;border-left-color:#10b981}
+.dl-turn.sC{background:#fffbeb;border-left-color:#f59e0b}
+.dl-turn.sD{background:#f5f3ff;border-left-color:#8b5cf6}
+.dl-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;color:#fff;flex-shrink:0}
+.sA .dl-avatar{background:#3b82f6}.sB .dl-avatar{background:#10b981}
+.sC .dl-avatar{background:#f59e0b}.sD .dl-avatar{background:#8b5cf6}
+.dl-body{flex:1;min-width:0}
+.dl-speaker{font-size:.7rem;font-weight:700;margin-bottom:3px}
+.sA .dl-speaker{color:#1e40af}.sB .dl-speaker{color:#065f46}.sC .dl-speaker{color:#92400e}.sD .dl-speaker{color:#5b21b6}
+.dl-text{font-size:.9rem;line-height:1.7}
+.dl-blank{display:inline-block;min-width:60px;padding:2px 8px;border-bottom:2px dashed var(--amber);color:var(--tx3);cursor:pointer;text-align:center;margin:0 2px;font-weight:600;font-size:.85rem}
+.dl-blank.filled{color:var(--tx);border-bottom-style:solid;border-bottom-color:var(--navy);background:#fff}
+.dl-blank.selected{border-bottom-width:3px;border-bottom-color:var(--amber);background:rgba(251,191,36,.2)}
+.dl-blank.correct{color:#065f46;border-bottom-color:#10b981;background:#dcfce7}
+.dl-blank.wrong{color:#991b1b;border-bottom-color:#ef4444;background:#fee2e2}
+.dl-play{font-size:.7rem;color:var(--tx3);cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid var(--bd);background:#fff;margin-top:5px;display:inline-flex;align-items:center;gap:3px;-webkit-tap-highlight-color:transparent}
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding:12px;background:#fff;border-radius:var(--r);border:1px solid var(--bd);position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.06);margin-bottom:10px}
+.wb-label{width:100%;font-size:.7rem;color:var(--tx3);font-weight:700;margin-bottom:2px}
+.wb-word{padding:10px 16px;border-radius:var(--r);background:#fff;border:1px solid var(--bd);font-size:.82rem;cursor:pointer;font-weight:600;color:var(--tx);-webkit-tap-highlight-color:transparent;min-height:42px;display:flex;align-items:center}
+.wb-word:active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.wb-word.used{opacity:.25;pointer-events:none;text-decoration:line-through}
+.score-wrap{text-align:center;padding:6px 0}
+.score-circle{width:90px;height:90px;border-radius:50%;margin:0 auto 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#dcfce7;border:3px solid var(--green)}
+.score-circle.fail{background:#fee2e2;border-color:var(--red)}
+.score-pct{font-size:1.6rem;font-weight:800;font-family:monospace}
+.score-circle.fail .score-pct{color:var(--red)}
+.score-stars{font-size:1.2rem;margin:4px 0}
+.score-msg{font-size:.82rem;color:var(--tx2);font-weight:500}
+.score-detail{font-size:.7rem;color:var(--tx3);margin:4px 0;padding:5px 10px;background:#f8fafc;border-radius:var(--r);display:inline-block}
+.score-wrong{font-size:.74rem;color:var(--red);margin-top:6px;padding:8px;background:#fef2f2;border-radius:var(--r);text-align:left}
+.action-bar{padding:8px 10px 16px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.btn{padding:12px 16px;border-radius:var(--r);border:1px solid var(--bd);background:#fff;font-size:.8rem;font-family:inherit;cursor:pointer;color:var(--tx2);font-weight:500;min-height:44px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+.btn-amber{background:var(--amber);color:#152d4a;border-color:var(--amber);font-weight:600}
+.btn-danger{color:var(--red);border-color:var(--red)}.btn-danger:active{background:#fef2f2}
+@media(min-width:600px){
+.nav-bar{padding:8px 20px}.nav-logo{font-size:.9rem}.logo-icon{width:26px;height:26px;font-size:.7rem}
+.nav-btn{font-size:.73rem;padding:5px 12px}.hide-m{display:inline}
+.hero{padding:28px 24px 32px}.hero h1{font-size:1.6rem}.hero-sub{font-size:.85rem}.hero-tag{font-size:.75rem;padding:3px 12px}
+.level-section{padding:16px 20px 6px}
+.level-grid{grid-template-columns:repeat(3,1fr);gap:10px;max-width:900px;margin:0 auto}
+.level-card{padding:16px 14px}.level-dot{width:22px;height:22px;font-size:.7rem}.level-title{font-size:.92rem}
+.main-grid{max-width:1200px;margin:10px auto;padding:0 20px 20px;display:grid;grid-template-columns:1fr 1.3fr;gap:14px}
+.main-grid.expand{grid-template-columns:1fr}.main-grid.expand .card:first-child{display:none}
+.card-body{padding:14px}.step-tabs{display:flex}.step-tab{padding:8px 14px;font-size:.74rem}
+.role-avatar-circle{width:40px;height:40px;font-size:.76rem}
+.colloc-list{display:grid;grid-template-columns:repeat(2,1fr)}
+.dl-text{font-size:.92rem}.dl-blank{font-size:.88rem;min-width:80px}
+.wb-word{padding:10px 18px;font-size:.82rem}
+.btn{font-size:.82rem;padding:10px 18px;min-height:42px}}
+@media(min-width:1024px){
+.hero{padding:36px 32px 40px}.hero h1{font-size:2rem}
+.colloc-list{grid-template-columns:repeat(3,1fr)}.role-avatar-circle{width:52px;height:52px;font-size:.9rem}}
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <div class="nav-logo"><div class="logo-icon">W</div><span>WorkBuddy</span></div>
+  <span class="nav-spacer"></span>
+  <button class="nav-btn hide-m">⬇ 下载</button>
+  <button class="nav-btn hide-m">🔗 分享</button>
+  <button class="nav-btn nav-btn-primary">打开 App</button>
+</div>
+
+<div class="hero">
+  <h1>承包商安全管理(二) · 互动练习</h1>
+  <div class="hero-sub">Contractor Safety Management II — On-Site Safety Practice</div>
+  <div class="hero-tags"><span class="hero-tag">🎭 4人角色扮演</span><span class="hero-tag">📚 3级递进</span><span class="hero-tag">🎯 EHS英语D课包·第二课</span></div>
+</div>
+
+<div class="level-section"><div class="level-grid" id="levelGrid">
+  <div class="level-card sel-b" onclick="setLevel('basic')" data-lv="basic"><div class="level-dot ld-b">🟢</div><div class="level-title">Level 1 · 现场作业入门</div><div class="level-desc">高中词汇 · 作业许可证与高风险作业</div></div>
+  <div class="level-card" onclick="setLevel('prequal')" data-lv="prequal"><div class="level-dot ld-i">🟡</div><div class="level-title">Level 2 · 作业许可与管控</div><div class="level-desc">混合词汇 · PTP核心内容与现场检查</div></div>
+  <div class="level-card" onclick="setLevel('prejob')" data-lv="prejob"><div class="level-dot ld-a">🔴</div><div class="level-title">Level 3 · 综合安全管理</div><div class="level-desc">专业词汇 · TWIH分析与全过程管控</div></div>
+</div></div>
+
+<div class="main-grid" id="mainGrid">
+  <div class="card" id="roleCard">
+    <div class="card-header"><span>🎯</span><span class="card-title">选择角色</span></div>
+    <div class="card-body"><div class="role-grid" id="roleGrid"></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span>📋</span><span class="card-title">场景练习</span></div>
+    <div class="card-body">
+      <div class="step-tabs">
+        <button class="step-tab active" data-step="desc" onclick="switchStep('desc')">📋 说明</button>
+        <button class="step-tab" data-step="colloc" onclick="switchStep('colloc')">🔗 搭配</button>
+        <button class="step-tab" data-step="blank" onclick="switchStep('blank')">✍️ 填空</button>
+        <button class="step-tab" data-step="score" onclick="switchStep('score')">⭐ 评分</button>
+      </div>
+      <div id="stepContent"></div>
+    </div>
+  </div>
+</div>
+
+<div class="action-bar">
+  <button class="btn btn-amber" onclick="playCurrent()">🔊 播放</button>
+  <button class="btn btn-primary" onclick="checkAnswers()" id="checkBtn" style="display:none">✅ 检查</button>
+  <button class="btn" onclick="nextBlank()">▶ 下一题</button>
+  <button class="btn btn-danger" onclick="resetScene()">🔄 重置</button>
+</div>
+
+<script>
+const sceneData={basic:{name:'现场作业入门',desc:'承包商已通过资格预审并完成入场准备，即将开始现场作业。项目经理与EHS经理召开作业前安全沟通会，重点介绍作业许可证(PTP)的适用场景、高风险作业类型识别，以及现场安全管理的基本要求。',
+roles:[{id:'A',short:'PM',name:'Project Manager',cn:'项目经理'},{id:'B',short:'EH',name:'EHS Manager',cn:'安环经理'},{id:'C',short:'CR',name:'Contractor Rep',cn:'承包商代表'},{id:'D',short:'SO',name:'Site Officer',cn:'安全员'}],
+collocations:[['work permit','作业许可证'],['high risk activities','高风险作业'],['working at heights','高处作业'],['hot work','动火作业'],['confined space','有限空间'],['lock out tag out','上锁挂牌(LOTO)'],['personal protective equipment','个人防护用品'],['safety inspection','安全检查']],
+dialogue:[{speaker:'A',cn:'项目经理',text:'Our contractors are ready to start on-site work. What is the first safety step before any task begins?',blanks:[]},{speaker:'B',cn:'安环经理',text:'Every task must have a completed ___[0]___, also called a work permit, especially for ___[1]___ like excavation or hot work.',blanks:[{id:0,answer:'Pre-Task Plan'},{id:1,answer:'high risk activities'}]},{speaker:'C',cn:'承包商代表',text:'Could you list some examples of high risk work that need a permit?',blanks:[]},{speaker:'B',cn:'安环经理',text:'Sure. ___[2]___ over 1.8 meters, ___[3]___, ___[4]___ entry, and energized electrical work above 50 volts all require permits.',blanks:[{id:2,answer:'working at heights'},{id:3,answer:'hot work'},{id:4,answer:'confined space'}]},{speaker:'D',cn:'安全员',text:'I will check that all workers have proper ___[5]___ and permits before work starts.',blanks:[{id:5,answer:'PPE'}]},{speaker:'B',cn:'安环经理',text:'Good. Also, all equipment maintenance must follow ___[6]___ procedures before any servicing.',blanks:[{id:6,answer:'lock out tag out'}]}]},
+prequal:{name:'作业许可与管控',desc:'现场作业进入常态化阶段。EHS经理向项目经理和承包商团队详细介绍PTP(作业前方案)的9项核心内容、周度安全检查清单覆盖范围、定期安全会议制度，以及针对违规和积极上报行为的奖惩机制。',
+roles:[{id:'A',short:'PM',name:'Project Manager',cn:'项目经理'},{id:'B',short:'EH',name:'EHS Manager',cn:'安环经理'},{id:'C',short:'CR',name:'Contractor Rep',cn:'承包商代表'},{id:'D',short:'SO',name:'Site Officer',cn:'安全员'}],
+collocations:[['hazard identification','危险源辨识'],['risk assessment','风险评估'],['control measures','管控措施'],['job briefing','工作交底'],['corrective actions','整改措施'],['safety meeting','安全会议'],['penalty and reward','奖惩制度'],['routine inspection','日常巡查']],
+dialogue:[{speaker:'A',cn:'项目经理',text:'After the PTP is approved, what are the key on-site safety activities during the project?',blanks:[]},{speaker:'B',cn:'安环经理',text:'First, they ensure all ___[0]___ listed in the PTP are in place. Then they perform routine ___[1]___ at least weekly.',blanks:[{id:0,answer:'control measures'},{id:1,answer:'safety inspections'}]},{speaker:'C',cn:'承包商代表',text:'How often do we hold ___[2]___ for ongoing projects?',blanks:[{id:2,answer:'safety meetings'}]},{speaker:'B',cn:'安环经理',text:'At least weekly. We review current safety performance, existing hazards and ___[3]___ status.',blanks:[{id:3,answer:'corrective actions'}]},{speaker:'D',cn:'安全员',text:'What behaviors lead to penalties or rewards?',blanks:[]},{speaker:'B',cn:'安环经理',text:'Safety violations get fines. But proactively reporting unsafe acts or offering good suggestions earns ___[4]___.',blanks:[{id:4,answer:'rewards'}]},{speaker:'A',cn:'项目经理',text:'All violations will be reviewed at the weekly ___[5]___. Make sure everyone attends the daily ___[6]___ before work.',blanks:[{id:5,answer:'project meeting'},{id:6,answer:'tool box talk'}]}]},
+prejob:{name:'综合安全管理',desc:'临近项目中期复盘。项目经理与EHS经理对承包商现场安全管理进行全过程回顾，涵盖作业前危害辨识与风险评估→PTP审批→现场巡查→周安全会→奖惩制度的完整闭环，并引入TWIH分析法预防人为失误。',
+roles:[{id:'A',short:'PM',name:'Project Manager',cn:'项目经理'},{id:'B',short:'EH',name:'EHS Manager',cn:'安环经理'},{id:'C',short:'CR',name:'Contractor Rep',cn:'承包商代表'},{id:'D',short:'SO',name:'Site Officer',cn:'安全员'}],
+collocations:[['Pre-Task Plan','作业前方案'],['TWIH analysis','TWIH分析'],['human error precursors','人为失误诱因'],['stop work authority','停工权力'],['near misses','未遂事故'],['muster points','集合点'],['reward program','奖励制度'],['safety violations','安全违规']],
+dialogue:[{speaker:'A',cn:'项目经理',text:'Could you summarize the complete contractor safety management process on site?',blanks:[]},{speaker:'B',cn:'安环经理',text:'The full process: pre-task ___[0]___ and ___[1]___ → fill out the ___[2]___ → get approvals → ongoing inspections → weekly review meetings → reward and penalty.',blanks:[{id:0,answer:'hazard identification'},{id:1,answer:'risk assessment'},{id:2,answer:'Pre-Task Plan'}]},{speaker:'D',cn:'安全员',text:'What about human error prevention during operations?',blanks:[]},{speaker:'B',cn:'安环经理',text:'We use ___[3]___ analysis. It covers task demands, work environment, individual capabilities, and human nature — like stress, assumptions, and complacency.',blanks:[{id:3,answer:'TWIH'}]},{speaker:'C',cn:'承包商代表',text:'If we spot an unsafe condition during work, what should we do?',blanks:[]},{speaker:'B',cn:'安环经理',text:'Immediately exercise ___[4]___. Contact the sponsor. Do not resume until the hazard is mitigated and the plan is updated. Report all ___[5]___ including ___[6]___.',blanks:[{id:4,answer:'stop work authority'},{id:5,answer:'incidents'},{id:6,answer:'near misses'}]},{speaker:'A',cn:'项目经理',text:'Also ensure all workers know the emergency exits and ___[7]___ locations before starting any task.',blanks:[{id:7,answer:'muster points'}]}]}};
+const roleLabels=['学员 A','学员 B','学员 C','学员 D'];
+let curLevel='basic',curStep='desc',roleClaims={A:'学员 A',B:'学员 B',C:'学员 C',D:'学员 D'};
+let blankSelections={},selectedBlank=null,scored=false;
+
+function renderAll(){
+  document.getElementById('mainGrid').classList.toggle('expand',curStep==='blank'||curStep==='score');
+  document.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.step===curStep));
+  updateCheckBtn();renderRoles();renderStep();
+}
+function init(){renderAll()}init();
+
+function renderRoles(){
+  const d=sceneData[curLevel];
+  document.getElementById('roleGrid').innerHTML=d.roles.map(r=>{
+    const c=roleClaims[r.id];
+    return`<div class="role-tile role-tile-${r.id}${c?' claimed':''}" onclick="${c?`unclaim('${r.id}')`:`claim('${r.id}')`}"><div class="role-avatar-circle">${r.short}</div><div class="role-name">${r.name}</div><div class="role-desc">${r.cn}</div>${c?`<div class="role-student">${c}</div>`:`<div class="role-empty">点击抢位</div>`}</div>`;
+  }).join('');
+}
+function claim(rid){if(roleClaims[rid])return;const u=Object.values(roleClaims),a=roleLabels.find(l=>!u.includes(l));if(a){roleClaims[rid]=a;renderRoles();}}
+function unclaim(rid){delete roleClaims[rid];renderRoles();}
+function setLevel(lv){
+  curLevel=lv;curStep='desc';blankSelections={};selectedBlank=null;scored=false;
+  const m={basic:'sel-b',prequal:'sel-i',prejob:'sel-a'};
+  document.querySelectorAll('.level-card').forEach(c=>{c.className='level-card';if(c.dataset.lv===lv)c.classList.add(m[lv]);});
+  document.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.step==='desc'));
+  document.getElementById('mainGrid').classList.remove('expand');renderAll();
+}
+function switchStep(step){
+  if(step==='score'&&curStep!=='score'&&!scored){checkAnswers();return;}
+  curStep=step;selectedBlank=null;
+  document.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.step===step));
+  document.getElementById('mainGrid').classList.toggle('expand',step==='blank'||step==='score');
+  updateCheckBtn();renderStep();
+}
+function updateCheckBtn(){document.getElementById('checkBtn').style.display=curStep==='blank'?'inline-flex':'none';}
+
+function renderStep(){
+  const el=document.getElementById('stepContent'),d=sceneData[curLevel];
+  if(curStep==='desc'){
+    el.innerHTML=`<div class="desc-title">📌 ${d.name}</div><div class="desc-text">${d.desc}</div><div class="tip-box">💡 <strong>路径：</strong>说明→「搭配」词组→「填空」对话→「评分」</div>`;
+  }else if(curStep==='colloc'){
+    el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><strong style="font-size:.85rem">🔗 高频搭配（${d.collocations.length}组）</strong><button class="btn btn-primary" onclick="playAllCollocs()" style="padding:8px 14px;font-size:.75rem;min-height:36px">▶ 连续播放</button></div><div class="colloc-list">${d.collocations.map((c,i)=>`<div class="colloc-item" onclick="playColloc(${i})"><div class="colloc-play">🔊</div><div><div class="colloc-en">${c[0]}</div><div class="colloc-zh">${c[1]}</div></div></div>`).join('')}</div>`;
+  }else if(curStep==='blank'){
+    const allAns=[...new Set(d.dialogue.flatMap(t=>t.blanks).map(b=>b.answer))];
+    el.innerHTML=`<div style="margin-bottom:6px;color:var(--tx2);font-size:.78rem">✍️ <strong>填空</strong> — 点词库→点空格填入</div>
+      <div class="word-bank"><div class="wb-label">📦 词库 · 点词→点空格</div>${allAns.map(a=>{const u=Object.values(blankSelections).includes(a);return`<span class="wb-word${u?' used':''}" onclick="${u?'':`pickWord('${a.replace(/'/g,"\\'")}')`}">${a}</span>`;}).join('')}</div>
+      ${d.dialogue.map((t,di)=>`<div class="dl-turn s${t.speaker}"><div class="dl-avatar">${t.speaker}</div><div class="dl-body"><div class="dl-speaker">${roleClaims[t.speaker]||roleLabels[['A','B','C','D'].indexOf(t.speaker)]} · ${t.cn}</div><div class="dl-text">${rBlanks(t)}</div><div class="dl-play" onclick="playDialog(${di})">🔊 播放整句</div></div></div>`).join('')}`;
+  }else{
+    const r=calcScore(),stars=r.pct>=90?'⭐⭐⭐⭐⭐':r.pct>=70?'⭐⭐⭐⭐':r.pct>=50?'⭐⭐⭐':r.pct>=30?'⭐⭐':'⭐';
+    const pass=r.pct>=60,msg=r.pct>=90?'太棒了！全部掌握！':r.pct>=70?'很好！再练一练就全对！':r.pct>=50?'不错，建议回「搭配」再练一轮。':'别灰心！先熟悉词组再来挑战。';
+    el.innerHTML=`<div class="score-wrap"><div class="score-circle${pass?'':' fail'}"><div class="score-pct">${r.pct}%</div><div style="font-size:.72rem;color:var(--tx2)">${r.correct}/${r.total}</div></div><div class="score-stars">${stars}</div><div class="score-msg">${msg}</div><div class="score-detail">📚 本场景 ${r.total} 个词组，掌握 ${r.correct} 个</div>${r.wrong.length?`<div class="score-wrong"><strong>需复习：</strong>${r.wrong.map(w=>`<span style="color:var(--red);font-weight:600">${w}</span>`).join('、')}</div>`:'<div class="score-detail" style="color:var(--green);background:#dcfce7">🎉 全部掌握！</div>'}</div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--bd)"><strong style="font-size:.85rem">✅ 完整对话对照</strong></div>
+      ${d.dialogue.map(t=>`<div class="dl-turn s${t.speaker}"><div class="dl-avatar">${t.speaker}</div><div class="dl-body"><div class="dl-speaker">${roleClaims[t.speaker]||roleLabels[['A','B','C','D'].indexOf(t.speaker)]} · ${t.cn}</div><div class="dl-text">${rDone(t)}</div></div></div>`).join('')}`;
+  }
+}
+function rBlanks(t){let x=t.text;t.blanks.forEach(b=>{const f=blankSelections[b.id];let disp=f||'_______',cls='';if(scored&&f)cls=f===b.answer?'correct':'wrong';else if(f)cls='filled';if(selectedBlank===b.id&&!scored)cls+=' selected';x=x.replace(`___[${b.id}]___`,`<span class="dl-blank ${cls}" onclick="selectBlank(${b.id})">${disp}</span>`);});return x;}
+function rDone(t){let x=t.text;t.blanks.forEach(b=>{const f=blankSelections[b.id]||b.answer,ok=blankSelections[b.id]===b.answer;x=x.replace(`___[${b.id}]___`,`<span style="color:${ok?'#065f46':'#991b1b'};font-weight:700;background:${ok?'#dcfce7':'#fee2e2'};padding:1px 5px;border-radius:3px">${f}</span>`);});return x;}
+function selectBlank(bid){if(scored)return;selectedBlank=bid;renderStep();}
+function pickWord(w){if(selectedBlank===null||scored)return;blankSelections[selectedBlank]=w;selectedBlank=null;renderStep();}
+function nextBlank(){const d=sceneData[curLevel],all=d.dialogue.flatMap(t=>t.blanks);for(let i=0;i<all.length;i++){if(!blankSelections[all[i].id]){selectedBlank=all[i].id;renderStep();return;}}checkAnswers();}
+function checkAnswers(){const d=sceneData[curLevel];d.dialogue.flatMap(t=>t.blanks).forEach(b=>{if(!blankSelections[b.id])blankSelections[b.id]='';});scored=true;selectedBlank=null;curStep='score';document.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.step==='score'));document.getElementById('mainGrid').classList.add('expand');updateCheckBtn();renderStep();}
+function calcScore(){const d=sceneData[curLevel],all=d.dialogue.flatMap(t=>t.blanks);let total=all.length,c=0,w=[];all.forEach(b=>{if(blankSelections[b.id]===b.answer)c++;else w.push(b.answer);});return{total,correct:c,wrong:[...new Set(w)],pct:total?Math.round((c/total)*100):0};}
+function resetScene(){blankSelections={};selectedBlank=null;scored=false;curStep='desc';document.querySelectorAll('.step-tab').forEach(t=>t.classList.toggle('active',t.dataset.step==='desc'));document.getElementById('mainGrid').classList.remove('expand');updateCheckBtn();renderStep();}
+const ac={};
+function ga(p){if(!ac[p])ac[p]=new Audio(p);const a=ac[p];a.pause();a.currentTime=0;return a;}
+function stopA(){Object.values(ac).forEach(a=>{a.pause();a.currentTime=0;});}
+function playColloc(i){stopA();ga(`audio2/colloc_${curLevel}_${i}.mp3`).play();}
+function playAllCollocs(){const cs=sceneData[curLevel].collocations;let i=0;function n(){if(i<cs.length){stopA();ga(`audio2/colloc_${curLevel}_${i}.mp3`).play();i++;setTimeout(n,2000);}}stopA();n();}
+function playDialog(idx){stopA();ga(`audio2/dialog_${curLevel}_${idx}.mp3`).play();}
+function playCurrent(){stopA();ga(`audio2/colloc_${curLevel}_0.mp3`).play();}
+</script>
+</body>
+</html>
